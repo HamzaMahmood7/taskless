@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // imported the models
-const UserModel = require("../models/User.model");
+const UserModel = require("../models/User.Model");
 
 // bcryptjs import to encrypt user password
 const bcryptjs = require("bcryptjs");
