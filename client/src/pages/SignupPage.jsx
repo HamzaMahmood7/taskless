@@ -7,11 +7,13 @@ const SignupPage = () => {
   const [username, setUsernameState] = useState('')
   const [email, setEmailState] = useState('')
   const [password, setPasswordState] = useState('')
+  const [error, setError] = useState(null)
 
   const nav = useNavigate()
 
  const handleSignup = async(e) => {
   e.preventDefault()
+  setError(null)
 
   try {
     const createdUser = await axios.post('http://localhost:5005/auth/signup', {
@@ -23,6 +25,7 @@ const SignupPage = () => {
     nav('/login')
   } catch (error) {
     console.log(error)
+    setError(error.response.data.errorMessage)
   }
  }
 
@@ -42,6 +45,8 @@ const SignupPage = () => {
           Password:
           <input type="password" value={password} onChange={(e) => {setPasswordState(e.target.value)}}/>
         </label>
+        {/* show error message if required */}
+        {error && <p className="error">{error}</p>}
         <button>Sign Up</button>
       </form>
     </div>

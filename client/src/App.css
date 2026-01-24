@@ -50,3 +50,7 @@ form {
 label {
   margin: 5px;
 }
+
+.error {
+  color: red;
+}

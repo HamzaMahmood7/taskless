@@ -1,9 +1,65 @@
-import React from 'react'
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  return (
-    <div>LoginPage</div>
-  )
-}
+  const [email, setEmailState] = useState("");
+  const [password, setPasswordState] = useState("");
+  const [error, setError] = useState(null);
 
-export default LoginPage
+  const nav = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(null)
+
+    const userToLogin = {
+      email,
+      password
+    }
+
+    try {
+      const createdUser = await axios.post("http://localhost:5005/auth/login", userToLogin);
+      console.log(createdUser.data);
+      // Store the auth token in local storage
+      localStorage.setItem("authToken", createdUser.data.authToken);
+      nav("/profile");
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data.errorMessage);
+    }
+  };
+
+  return (
+    <div>
+      <h3>Login here!</h3>
+      <form onSubmit={handleLogin}>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmailState(e.target.value);
+            }}
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPasswordState(e.target.value);
+            }}
+          />
+        </label>
+        {/* show error message if required */}
+        {error && <p className="error">{error}</p>}
+        <button>Login</button>
+      </form>
+    </div>
+  );
+};
+
+export default LoginPage;
