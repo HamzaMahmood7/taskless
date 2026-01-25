@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 const LoginPage = () => {
   const [email, setEmailState] = useState("");
@@ -8,6 +9,7 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
 
   const nav = useNavigate();
+  const {authenticateUser} = useContext(AuthContext)
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,6 +25,7 @@ const LoginPage = () => {
       console.log(createdUser.data);
       // Store the auth token in local storage
       localStorage.setItem("authToken", createdUser.data.authToken);
+      await authenticateUser()
       nav("/profile");
     } catch (error) {
       console.log(error);
@@ -57,6 +60,8 @@ const LoginPage = () => {
         {/* show error message if required */}
         {error && <p className="error">{error}</p>}
         <button>Login</button>
+        <p>Don't have an account yet?</p>
+        <Link to={'/signup'}>Sign up here!</Link>
       </form>
     </div>
   );

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
 
@@ -48,6 +48,8 @@ const SignupPage = () => {
         {/* show error message if required */}
         {error && <p className="error">{error}</p>}
         <button>Sign Up</button>
+        <p>Already a member?</p>
+        <Link to={'/login'}>Login</Link>
       </form>
     </div>
   );

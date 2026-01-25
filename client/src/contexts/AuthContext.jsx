@@ -26,30 +26,36 @@ const AuthWrapper = ({ children }) => {
         );
 
         console.log(loggedInUser.data)
-        setCurrentUser(loggedInUser.data.decodedToken._id)
+        setCurrentUser(loggedInUser.data.currentLoggedInUser)
         setIsLoading(false)
         setIsLoggedIn(true)
       } else {
         setCurrentUser(null);
         setIsLoading(false);
         setIsLoggedIn(false);
-        nav("/");
+        // nav("/"); // removed as it is in the protected route component
       }
     } catch (error) {
       setCurrentUser(null);
       setIsLoading(false);
       setIsLoggedIn(false);
       nav("/login");
-      console.log(error);
+      console.log(loggedInUser.error);
     }
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    nav('/login')
+  }
+
 
   useEffect(() => {
     authenticateUser()
   }, [])
 
   return (
-    <AuthContext.Provider value={{ currentUser, isLoading, isLoggedIn}}>
+    <AuthContext.Provider value={{ currentUser, isLoading, isLoggedIn, authenticateUser, handleLogout}}>
       {children}
     </AuthContext.Provider>
   );
