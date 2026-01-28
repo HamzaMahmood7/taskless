@@ -145,10 +145,42 @@ const DashboardPage = () => {
         ) : (
           <ul>
             {groups.map((oneGroup) => {
+              const isOwner = oneGroup.createdBy?._id === currentUser._id; // checks if current user is the owner
+
+              const myMemberEntry = oneGroup.members.find((oneMember) => {
+                return oneMember.userId?._id === currentUser._id;
+              });
+              const myRole =
+                myMemberEntry?.role || (isOwner ? "owner" : "member");
               return (
                 <li key={oneGroup._id}>
                   <strong>{oneGroup.groupName}</strong>
+                  <span> {myRole}</span>
                   <p>Members: {oneGroup.members.length}</p>
+                  <ul>
+                    {oneGroup.members.map((oneMember) => {
+                      return (
+                        <li key={oneMember.userId?._id}>
+                          {oneMember.userId?.username}{" "}
+                          <small>{oneMember.role}</small>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <p>Group Tasks: {oneGroup.tasks.length}</p>
+                  {oneGroup.tasks && oneGroup.tasks.length > 0 ? (
+                    <ul>
+                      {oneGroup.tasks.map((oneTask) => {
+                        return (
+                          <li key={oneTask._id}>
+                            {oneTask.title} -<small>{oneTask.status}</small>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    <p>No tasks for this group yet.</p>
+                  )}
                   <p>Created by: {oneGroup.createdBy?.username}</p>
                 </li>
               );
@@ -156,6 +188,7 @@ const DashboardPage = () => {
           </ul>
         )}
         <Link to={"/group-list"}>All groups</Link>
+        <Link to={"/create-group"}>Create a group</Link>
       </div>
     </>
   );
