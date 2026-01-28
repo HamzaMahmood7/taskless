@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const DashboardPage = () => {
   const { currentUser } = useContext(AuthContext);
@@ -10,17 +11,21 @@ const DashboardPage = () => {
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const tokenForAuth = localStorage.getItem("authToken");
+
   useEffect(() => {
     if (!currentUser) return;
 
     const fetchTasks = async () => {
       try {
-        const tokenForAuth = localStorage.getItem("authToken");
-        const res = await axios.get("http://localhost:5005/task/dashboard-tasks", {
-          headers: {
-            authorization: `Bearer ${tokenForAuth}`,
+        const res = await axios.get(
+          "http://localhost:5005/task/dashboard-tasks",
+          {
+            headers: {
+              authorization: `Bearer ${tokenForAuth}`,
+            },
           },
-        });
+        );
         setTasks(res.data);
       } catch (error) {
         console.error("Failed to fetch tasks", error);
@@ -36,7 +41,6 @@ const DashboardPage = () => {
 
     const fetchGroups = async () => {
       try {
-        const tokenForAuth = localStorage.getItem("authToken");
         const res = await axios.get("http://localhost:5005/group/all-groups", {
           headers: {
             authorization: `Bearer ${tokenForAuth}`,
@@ -51,6 +55,31 @@ const DashboardPage = () => {
     };
     fetchGroups();
   }, [currentUser]);
+
+  const handleToggleComplete = async (taskId, currentStatus) => {
+    try {
+      const newStatus = currentStatus === "Completed" ? "To-do" : "Completed";
+
+      const completedTaskRes = await axios.patch(
+        `http://localhost:5005/task/${taskId}`,
+        { status: newStatus },
+        { headers: { authorization: `Bearer ${tokenForAuth}` } },
+      );
+
+      const updatedTaskStatus = tasks.map((currentTask) => {
+        if (currentTask._id === taskId) {
+          return { ...currentTask, status: newStatus };
+        } else {
+          return currentTask;
+        }
+      });
+
+      setTasks(updatedTaskStatus);
+    } catch (error) {
+      console.log("could not update status");
+      // toast.error('could not update task status')
+    }
+  };
 
   if (loading) {
     return <p>Loading tasks...</p>;
@@ -68,19 +97,27 @@ const DashboardPage = () => {
         ) : (
           <ul>
             {tasks.map((oneTask) => {
+              const isDone = oneTask.status === "Completed";
               return (
                 <li key={oneTask._id}>
                   <strong>{oneTask.title}</strong>
                   <p>{oneTask.description}</p>
                   <p>{oneTask.status}</p>
                   <span>{oneTask.priority}</span>
+                  <input
+                    type="checkbox"
+                    checked={isDone}
+                    onChange={() => {
+                      handleToggleComplete(oneTask._id, oneTask.status);
+                    }}
+                  />
                 </li>
               );
             })}
           </ul>
         )}
-        <Link to={'/task-list'}>All tasks</Link>
-        <Link to={'/create-task'}>Create a task</Link>
+        <Link to={"/task-list"}>All tasks</Link>
+        <Link to={"/create-task"}>Create a task</Link>
 
         {groups.length === 0 ? (
           <p>No groups yet</p>
@@ -97,7 +134,7 @@ const DashboardPage = () => {
             })}
           </ul>
         )}
-        <Link to={'/group-list'}>All groups</Link>
+        <Link to={"/group-list"}>All groups</Link>
       </div>
     </>
   );

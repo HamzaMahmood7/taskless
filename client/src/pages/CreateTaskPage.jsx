@@ -1,8 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 
 const CreateTaskPage = () => {
+    const nav = useNavigate()
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("To-do");
@@ -71,7 +74,7 @@ const CreateTaskPage = () => {
       dueDate: dueDate || null,
       //   assignedUserIds: assignedUserIds || [],
       //   assignedGroup: assignedGroup,
-      assignedUserIds: assignedUserIds.map((u) => u.value), // array of IDs
+      assignedUserIds: assignedUserIds.map((users) => users.value), // array of IDs
       assignedGroup: assignedGroup ? assignedGroup.value : null,
     };
 
@@ -85,7 +88,8 @@ const CreateTaskPage = () => {
           },
         },
       );
-      console.log("Task was successfully created!");
+      console.log("Task was successfully created!", res.data);
+      alert(`task created ${res.data.title}`)
     } catch (error) {
       console.log("failed to create task: ", error);
     }
@@ -110,7 +114,7 @@ const CreateTaskPage = () => {
         </label>
         <label>
           Description
-          <input
+          <textarea
             name="TaskDescription"
             value={description}
             onChange={(e) => {
@@ -118,7 +122,7 @@ const CreateTaskPage = () => {
             }}
             type="text"
             placeholder="Task Description"
-          ></input>
+          ></textarea>
         </label>
         <label>
           Status
@@ -213,6 +217,7 @@ const CreateTaskPage = () => {
           </select>
         </label> */}
         <button type="submit">Create Task</button>
+        <button type="button" onClick={() => {nav('/dashboard')}}>Cancel</button>
       </form>
     </>
   );

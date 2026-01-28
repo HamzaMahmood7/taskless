@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const TaskListPage = () => {
   const { currentUser } = useContext(AuthContext);
+  const nav = useNavigate();
 
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +31,46 @@ const TaskListPage = () => {
     };
     fetchTasks();
   }, [currentUser]);
+
+  const handleDeleteTask = async (taskId) => {
+    const confirmedDeletePopup = window.confirm(
+      "Are you sure you want to delete this task?",
+    );
+
+    if (confirmedDeletePopup) {
+      const loadingToast = toast.loading("Deleting task...");
+
+      try {
+        const tokenForAuth = localStorage.getItem("authToken");
+
+        const deletedTaskRes = await axios.delete(
+          `http://localhost:5005/task/${taskId}`,
+          {
+            headers: {
+              authorization: `Bearer ${tokenForAuth}`,
+            },
+          },
+        );
+
+        const updatedTaskList = tasks.filter((currentTask) => {
+          if (currentTask._id !== taskId) {
+            return true;
+          }
+        });
+        setTasks(updatedTaskList);
+
+        toast.success(`Task "${deletedTaskRes.data.title}" was deleted`, {
+          id: loadingToast,
+        });
+        console.log("task was deleted", deletedTaskRes);
+      } catch (error) {
+        console.error("Failed to delete task:", error);
+        toast.error("Failed to delete the task", {
+          id: loadingToast,
+        });
+      }
+    }
+  };
 
   if (loading) {
     return <p>Loading tasks...</p>;
@@ -56,12 +98,26 @@ const TaskListPage = () => {
                   </li>
 
                   <Link to={`/update-task/${oneTask._id}`}>Update Task</Link>
-                  <button>Delete Task</button>
+                  <button
+                    onClick={() => {
+                      handleDeleteTask(oneTask._id);
+                    }}
+                  >
+                    Delete Task
+                  </button>
                 </div>
               );
             })}
           </ul>
         )}
+        <button
+          type="button"
+          onClick={() => {
+            nav("/dashboard");
+          }}
+        >
+          Return to Dashboard
+        </button>
       </div>
     </>
   );

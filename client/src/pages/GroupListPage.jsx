@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../contexts/AuthContext';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const GroupListPage = () => {
-
-    const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
+  const nav = useNavigate();
 
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,10 +57,18 @@ const GroupListPage = () => {
             })}
           </ul>
         )}
+
+        <button
+          type="button"
+          onClick={() => {
+            nav("/dashboard");
+          }}
+        >
+          Return to Dashboard
+        </button>
       </div>
     </>
   );
 };
 
-
-export default GroupListPage
+export default GroupListPage;
