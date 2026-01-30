@@ -69,7 +69,7 @@ const CreateGroupPage = () => {
     try {
       //need to match the selectedUsers list to Schema
       const membersList = selectedUsers.map((eachSelectedUser) => ({
-        userId: eachSelectedUser._id,
+        userId: eachSelectedUser.value,
       }));
       const tokenForAuth = localStorage.getItem("authToken");
 
