@@ -72,8 +72,13 @@ router.get("/dashboard-groups", isAuthenticated, async (req, res) => {
 router.get("/:groupId", isAuthenticated, async (req, res) => {
   try {
     const oneGroup = await GroupModel.findById(req.params.groupId)
-      .select()
-      .populate();
+      .populate("createdBy", "username")
+      .populate("members.userId", "username")
+      .populate("tasks");
+
+    if (!oneGroup) {
+      return res.status(404).json({ message: "Group not found" });
+    }
     console.log("the specific group ", oneGroup);
     res.status(200).json(oneGroup);
   } catch (error) {
@@ -85,12 +90,23 @@ router.get("/:groupId", isAuthenticated, async (req, res) => {
 // route to update a group
 router.patch("/:groupId", isAuthenticated, async (req, res) => {
   try {
+    const group = await GroupModel.findById(req.params.groupId);
+
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+
+    if (String(group.createdBy) !== String(req.payload._id)) {
+      return res.status(403).json({ message: "Only owner can edit" });
+    }
+
     const updatedGroup = await GroupModel.findByIdAndUpdate(
       req.params.groupId,
       req.body,
       { new: true },
     );
-    console.log("update the group ", updatedGroup);
+
+    console.log("updated the group! ", updatedGroup);
     res.status(200).json(updatedGroup);
   } catch (error) {
     console.log(error);

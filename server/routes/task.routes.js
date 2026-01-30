@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const TaskModel = require("../models/Task.Model");
+const GroupModel = require("../models/Group.Model")
 const { isAuthenticated } = require("../middlewares/jwt.middleware");
 
 // Route to create a task
@@ -10,6 +11,12 @@ router.post("/create-task", isAuthenticated, async (req, res) => {
       ...req.body,
       createdBy: req.payload._id,
     });
+    if (req.body.assignedGroup) {
+      await GroupModel.findByIdAndUpdate(req.body.assignedGroup, {
+        $push: { tasks: newTask._id },
+      });
+    }
+
     console.log("Task created!", newTask);
     res.status(201).json(newTask);
   } catch (error) {
@@ -75,7 +82,7 @@ router.patch("/:taskId", isAuthenticated, async (req, res) => {
     )
       .populate("assignedUserIds", "username")
       .populate("assignedGroup", "groupName");
-      
+
     console.log("task was successfully updated: ", updatedTask);
     res.status(200).json(updatedTask);
   } catch (error) {
