@@ -52,8 +52,9 @@ server/
 ├── routes/              # Express Router (Auth, Task, Group, User)
 ├── app.js               # Express application initialization
 └── server.js            # Entry point - starts the Node server
+```
 
-🚀 Getting Started
+🚀 How to Run the Project
 Prerequisites
   - Node.js (v18+)
   - MongoDB (Atlas or Local)
