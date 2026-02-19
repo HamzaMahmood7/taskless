@@ -5,6 +5,7 @@
 
 > **Note:** The live server is hosted on a free tier. If the site is idle, it may take 15–30 seconds to spin up on the first request. ⚡
 
+## 📖 About the App 
 Taskless is a collaborative task management platform designed to streamline productivity for individuals and teams. Whether you're managing personal to-dos or coordinating complex tasks within a group, 
 Taskless provides a clean, distraction-free environment to get things done.
 
