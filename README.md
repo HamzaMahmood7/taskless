@@ -1,17 +1,5 @@
 # 🚀 Taskless
 
-<p align="center">
-  <a href="https://tasklessapp.netlify.app/">
-    <img src="https://img.shields.io/badge/Live_Demo-View_Project-brightgreen?style=for-the-badge&logo=netlify&logoColor=white" alt="Live Demo">
-  </a>
-  <a href="https://github.com/your-username/your-repo/stargazers">
-    <img src="https://img.shields.io/github/stars/your-username/your-repo?style=for-the-badge&color=yellow" alt="Stars">
-  </a>
-  <img src="https://img.shields.io/badge/Maintained%3F-yes-blue.svg?style=for-the-badge" alt="Maintained">
-</p>
-
----
-
 ### 🌐 Quick Links
 [**Live Application**](https://tasklessapp.netlify.app/login) | [**Report a Bug**](https://github.com/HamzaMahmood7/taskless/issues)
 
