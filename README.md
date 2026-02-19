@@ -3,7 +3,7 @@
 Taskless is a collaborative task management platform designed to streamline productivity for individuals and teams. Whether you're managing personal to-dos or coordinating complex tasks within a group, 
 Taskless provides a clean, distraction-free environment to get things done.
 
-✨ Features
+## ✨ Features 
 - Individual Task Management: Complete CRUD (Create, Read, Update, Delete) functionality for personal tasks.
 - Collaborative Groups: Create groups, invite other users, and share tasks seamlessly.
 - Secure Authentication: JWT-based authentication with protected routes and personalized user profiles.
@@ -11,7 +11,7 @@ Taskless provides a clean, distraction-free environment to get things done.
 - Real-time Feedback: Interactive UI with react-hot-toast notifications and react-confetti for task completions.
 - Responsive UI: Fully optimized for desktop and mobile using modern React 19.
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack 
 Frontend (Client)
  - Framework: React 19 (Vite)
  - Routing: React Router Dom v7
@@ -42,7 +42,10 @@ client/
 ├── config/              # Frontend environment/API configs
 ├── vite.config.js       # Vite build & plugin configuration
 └── package.json         # Frontend dependencies & scripts
+```
 
+### 💻 Server (Backend)
+```text
 server/
 ├── config/              # Express and Middleware configurations
 ├── db/                  # MongoDB connection setup via Mongoose
@@ -54,7 +57,7 @@ server/
 └── server.js            # Entry point - starts the Node server
 ```
 
-🚀 How to Run the Project
+## 🚀 How to Run the Project
 Prerequisites
   - Node.js (v18+)
   - MongoDB (Atlas or Local)
@@ -88,15 +91,15 @@ Start the frontend:
   Bash
   - npm run dev
 
-🗺️ API Endpoints (Brief)
-Method  Endpoint        Description
-POST    /auth/signup    Register a new user
-POST    /auth/login     Authenticate user & get token
-GET     /api/tasks      Get all tasks for logged-in user
-POST    /api/groups     Create a new collaboration group
-PUT     /api/tasks/:id  Update a specific task
+## 🗺️ API Endpoints (Brief)
+- Method  Endpoint        Description
+- POST    /auth/signup    Register a new user
+- POST    /auth/login     Authenticate user & get token
+- GET     /api/tasks      Get all tasks for logged-in user
+- POST    /api/groups     Create a new collaboration group
+- PUT     /api/tasks/:id  Update a specific task
 
-🤝 Contributing
+## 🤝 Contributing
 1. Fork the Project
 2. Create your Feature Branch (git checkout -b feature/AmazingFeature)
 3. Commit your Changes (git commit -m 'Add some AmazingFeature')
