@@ -1,10 +1,15 @@
 Taskless 🚀
 
 Taskless is a collaborative task management platform designed to streamline productivity for individuals and teams. Whether you're managing personal to-dos or coordinating complex tasks within a group, 
-Taskless provides a clean, distraction-free environment to get things done.✨ FeaturesIndividual Task Management: Complete CRUD (Create, Read, Update, Delete) functionality for personal tasks. 
-Collaborative Groups: Create groups, invite other users, and share tasks seamlessly.Secure Authentication: JWT-based authentication with protected routes and personalized user profiles. 
-Dynamic Dashboard: A centralized hub to view your upcoming tasks and group activities.Real-time Feedback: Interactive UI with react-hot-toast notifications and react-confetti for task completions. 
-Responsive UI: Fully optimized for desktop and mobile using modern React 19.
+Taskless provides a clean, distraction-free environment to get things done.
+
+✨ Features
+- Individual Task Management: Complete CRUD (Create, Read, Update, Delete) functionality for personal tasks.
+- Collaborative Groups: Create groups, invite other users, and share tasks seamlessly.
+- Secure Authentication: JWT-based authentication with protected routes and personalized user profiles.
+- Dynamic Dashboard: A centralized hub to view your upcoming tasks and group activities.
+- Real-time Feedback: Interactive UI with react-hot-toast notifications and react-confetti for task completions.
+- Responsive UI: Fully optimized for desktop and mobile using modern React 19.
 
 🛠️ Tech Stack
 Frontend (Client)
@@ -21,21 +26,32 @@ Backend (Server)
  - Security: JWT (JSON Web Tokens) & BcryptJS for password hashing
  - Middleware: CORS, Morgan (logging), and custom Error Handling
 
-📂 Project Structure
-Client
-├── src/
-│   ├── components/    # Navbar, Footer, ProtectedRoute
-│   ├── contexts/      # Auth and Global State
-│   ├── pages/         # Signup, Dashboard, GroupDetails, etc.
-│   ├── App.jsx        # Routing Logic
-│   └── main.jsx       # Entry point
+## 📂 Project Structure
 
-Server
-├── models/            # Mongoose Schemas (User, Task, Group)
-├── routes/            # API Endpoints (Auth, User, Task, Group)
-├── middlewares/       # JWT Verification & Guards
-├── db/                # MongoDB Connection Logic
-└── server.js          # Entry point
+### 💻 Client (Frontend)
+```text
+client/
+├── public/              # Static assets & _redirects for hosting
+├── src/
+│   ├── assets/          # Images, SVGs, and global styles
+│   ├── components/      # UI components (Navbar, ProtectedRoute, Footer)
+│   ├── contexts/        # AuthContext and Global state providers
+│   ├── pages/           # Page views (Dashboard, TaskList, GroupDetails)
+│   ├── App.jsx          # Routes, Toaster, and Main Layout
+│   └── main.jsx         # React DOM entry point
+├── config/              # Frontend environment/API configs
+├── vite.config.js       # Vite build & plugin configuration
+└── package.json         # Frontend dependencies & scripts
+
+server/
+├── config/              # Express and Middleware configurations
+├── db/                  # MongoDB connection setup via Mongoose
+├── error-handling/      # Centralized error & 404 middleware
+├── middlewares/         # JWT Validation & route guards
+├── models/              # Mongoose Schemas (User, Task, Group)
+├── routes/              # Express Router (Auth, Task, Group, User)
+├── app.js               # Express application initialization
+└── server.js            # Entry point - starts the Node server
 
 🚀 Getting Started
 Prerequisites
