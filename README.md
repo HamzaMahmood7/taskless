@@ -1,4 +1,21 @@
-# 🚀 Taskless 
+# 🚀 Taskless
+
+<p align="center">
+  <a href="https://your-live-link.com">
+    <img src="https://img.shields.io/badge/Live_Demo-View_Project-brightgreen?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo">
+  </a>
+  <a href="https://github.com/your-username/your-repo/stargazers">
+    <img src="https://img.shields.io/github/stars/your-username/your-repo?style=for-the-badge&color=yellow" alt="Stars">
+  </a>
+  <img src="https://img.shields.io/badge/Maintained%3F-yes-blue.svg?style=for-the-badge" alt="Maintained">
+</p>
+
+---
+
+### 🌐 Quick Links
+[**Live Application**](https://tasklessapp.netlify.app/login) | [**Report a Bug**](https://github.com/HamzaMahmood7/taskless/issues)
+
+> **Note:** The live server is hosted on a free tier. If the site is idle, it may take 15–30 seconds to spin up on the first request. ⚡
 
 Taskless is a collaborative task management platform designed to streamline productivity for individuals and teams. Whether you're managing personal to-dos or coordinating complex tasks within a group, 
 Taskless provides a clean, distraction-free environment to get things done.
